@@ -301,6 +301,23 @@
 <p class="count" id="count">43 عميل</p>
 
 <script>
+const whatsappMessage = `🌿 يا هلا!\n\nمحتاجينك تعرفي إن عندنا مفاجأة خاصة لعملاؤنا الأعزاء 🤍\n\nخصم 30% على كل منتجاتنا اليدوية الصديقة للبيئة 🌱✨\n\nاستخدمي كود:\n🏷️ Anamill30\n\nوتسوقي من موقعنا:\nhttps://anamill.com/\n\nالعرض محدود.. لا تفوّتيه! 💚`;
+
+function updateWhatsappLinks() {
+  document.querySelectorAll('.wa-btn').forEach(anchor => {
+    try {
+      const url = new URL(anchor.href);
+      const phone = url.pathname.replace(/\//g, '');
+      if (phone) {
+        const encodedText = encodeURIComponent(whatsappMessage);
+        anchor.href = `https://wa.me/${phone}?text=${encodedText}`;
+      }
+    } catch (e) {
+      console.warn('Invalid WhatsApp URL:', anchor.href, e);
+    }
+  });
+}
+
 function filterCards(q) {
   const cards = document.querySelectorAll('.card');
   const term = q.trim().toLowerCase();
@@ -313,6 +330,8 @@ function filterCards(q) {
   });
   document.getElementById('count').textContent = visible + ' عميل';
 }
+
+updateWhatsappLinks();
 </script>
 </body>
 </html>
